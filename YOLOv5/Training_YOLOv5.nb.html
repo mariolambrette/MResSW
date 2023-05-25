@@ -1760,152 +1760,258 @@ following structure: . └── YOLOv5/ └── Training</p>
 repo:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgYmFzaFxuY2QgLi9ZT0xPdjVcbmdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vdWx0cmFseXRpY3MveW9sb3Y1XG5cbmBgYCJ9 -->
-<pre class="bash"><code>cd ./YOLOv5
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgYmFzaFxuYGBgYmFzaFxuY2QgLi9ZT0xPdjVcbmdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vdWx0cmFseXRpY3MveW9sb3Y1XG5cbmBgYFxuYGBgIn0= -->
+<pre class="bash"><code>```bash
+cd ./YOLOv5
 git clone https://github.com/ultralytics/yolov5
 </code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="set-up-the-yolov5-conda-environment" class="section level1">
-<h1>Set up the YOLOv5 conda environment</h1>
-<p>This step is only needed once.</p>
-<p>Run the following in an Annaconda Prompt to create and activate the
-conda environment:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgYmFzaFxuY29uZGEgY3JlYXRlIC1uIFlPTE92NVxuY29uZGEgYWN0aXZhdGUgWU9MT3Y1XG5jb25kYSBpbnN0YWxsIHBpcFxuYGBgIn0= -->
-<pre class="bash"><code>conda create -n YOLOv5
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+# Set up the YOLOv5 conda environment
+
+This step is only needed once.
+
+Run the following in an Annaconda Prompt to create and activate the
+conda environment:
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgYmFzaFxuYGBgYmFzaFxuY29uZGEgY3JlYXRlIC1uIFlPTE92NVxuY29uZGEgYWN0aXZhdGUgWU9MT3Y1XG5jb25kYSBpbnN0YWxsIHBpcFxuYGBgXG5gYGAifQ== --&gt;
+
+```bash
+```bash
+conda create -n YOLOv5
 conda activate YOLOv5
 conda install pip</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Next, install the YOLO requirements.txt file using the following
-command:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgYmFzaFxucGlwIGluc3RhbGwgLXIgeW9sb3Y1L3JlcXVpcmVtZW50cy50eHRcbmBgYCJ9 -->
-<pre class="bash"><code>pip install -r yolov5/requirements.txt</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>The environment is now ready for running YOLOv5 scripts. the
-directory structure should look like this:</p>
-<p>. └── YOLOv5/ ├── yolov5 └── Training</p>
-</div>
-<div id="preparing-the-training-data" class="section level1">
-<h1>Preparing the Training Data</h1>
-<div id="eventmeasure-annotations" class="section level2">
-<h2>EventMeasure Annotations</h2>
-<p>Assuming the data has been annotated in EventMeasure, the first stage
-is to export the annotations as a text file:</p>
-<p><em>Program &gt; Generate Database Output</em></p>
-<p>Repeat this for all directories containg .EMObs files, saving the
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Next, install the YOLO requirements.txt file and the correct version of Pytorch to allow the GPU to be used using the following commands:
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgYmFzaFxuYGBgYmFzaFxucGlwIGluc3RhbGwgLXIgeW9sb3Y1L3JlcXVpcmVtZW50cy50eHRcbmBgYFxuYGBgIn0= --&gt;
+
+```bash
+```bash
+pip install -r yolov5/requirements.txt</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+The environment is now ready for running YOLOv5 scripts. the directory
+structure should look like this:
+
+. └── YOLOv5/ ├── yolov5 └── Training
+
+# Preparing the Training Data
+
+## EventMeasure Annotations
+
+Assuming the data has been annotated in EventMeasure, the first stage is
+to export the annotations as a text file:
+
+*Program \&gt; Generate Database Output*
+
+Repeat this for all directories containg .EMObs files, saving the
 outputs into a common directory (ideally wihtin the YOLOv5 directory
-created above):</p>
-<p>|. |└── YOLOv5/<br />
-| ├── yolov5<br />
-| └── Training/<br />
-| └── EMOutputs/<br />
-| └── various .txt DB outputs</p>
-<p>Annotations process used: 1. Every 1000th frame in every video was
+created above):
+
+\|. \|└── YOLOv5/\
+\| ├── yolov5\
+\| └── Training/\
+\| └── EMOutputs/\
+\| └── various .txt DB outputs
+
+Annotations process used: 1. Every 1000th frame in every video was
 annotated 2. Every fish in the frame that could be positively identified
 was annotated 3. Frame containing no fish were annotated with a single
-‘spp’ label 4. Annotated frames were extracted as JPEGs using
-EventMeasure</p>
-<div id="converting-annotations-to-yolo-format" class="section level3">
-<h3>Converting annotations to YOLO format</h3>
-<p>This assumes that annotated images are spread over multiple
-directories, resulting in multiple database outputs</p>
-<p>For each of the Event Measure Database outputs we need to convert the
+&#39;spp&#39; label 4. Annotated frames were extracted as JPEGs using
+EventMeasure
+
+
+### Converting annotations to YOLO format
+
+This assumes that annotated images are spread over multiple directories,
+resulting in multiple database outputs
+
+For each of the Event Measure Database outputs we need to convert the
 annotations to a YOLO format and store the annotated images in the way
-required by the YOLO model</p>
-<p>First, set up the image directory structure. It should end up like
-this:</p>
-<p>. └── YOLOv5/ ├── yolov5 └── Training/ ├── EMOutputs/ │ └── various
-.txt DB outputs ├── images/ │ ├── Train │ └── Test └── labels/ ├── Train
-└── Test</p>
-<div id="renaming-species-into-groups-optional" class="section level4">
-<h4>Renaming Species into groups (optional)</h4>
-<p>You may want to train your model on species groups rtaher than on
-individual species names. To do this run the RenameSpecies function on
-each of your EventMeasure database outputs. If you do not know all the
-species present in the file you can the function as follows and it will
-lead you through renaming them:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuUmVuYW1lU3BlY2llcyhFTURCID0gJzEwMDBGcmFtZXNfTUVPV19Qb2ludHMudHh0KVxuYGBgIn0= -->
-<pre class="r"><code>RenameSpecies(EMDB = &#39;1000Frames_MEOW_Points.txt)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Alternatively, by specifying <code>verbose = F</code> you can run the
-function without any further inputs after specifying the other
-parameters:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5SZW5hbWVTcGVjaWVzKEVNREIgPSAnQzovWU9MT3Y1L1RyYWluaW5nL0VNT3V0cHV0cy8xMDAwX01FT1dfUG9pbnRzLnR4dCcsIHZlcmJvc2UgPSBGLCBybS5zcGVjaWVzID0gYygnc3BwJyksIGdyb3VwLm5hbWVzID0gbGlzdCgnZ2Fkb2lkJywgJ2ZsYXQnLCAnYmVudGhpYycpLCByZXBsYWNlLnNwZWNpZXMgPSBsaXN0KGMoJ2FlZ2xlZmludXMnLCAnY2FuaWN1bGEnLCAnY2FwaWxsYXRhJywgJ21lcmxhbmd1cycsICdtaW51dHVzJywgJ21vbHZhJywgJ21vcmh1YScpLGMoJ2d1cm5hcmR1cycsICdpbnRlcm1lZGl1cycsICdsaW1hbmRhJywgJ2xpbWFuZGEtZmxlc3VzJywgJ2x5cmEnLCAncGxhdGVzc2EnLCAnc2NvcnBpdXMnKSwgYygnYWxiaWRhJywgJ2Jlcm5oYXJkdXMnLCAncGFndXJ1cycsICdydWJlbnMnLCAndW5kYXR1bScsICd2dWxnYXJpcycsICdsaW5lYXJpcycpKSwgc2F2ZXBhdGggPSAnQzovWU9MT3Y1L1RyYWluaW5nL0VNT3V0cHV0cy9Vc2UvMTAwME1FT1dfVXBkYXRlZC50eHQnKVxuYGBgIn0= -->
-<pre class="r"><code>
+required by the YOLO model
+
+First, set up the image directory structure. It should end up like this:
+
+. └── YOLOv5/ ├── yolov5 └── Training/ ├── EMOutputs/ │ └── various .txt
+DB outputs ├── images/ │ ├── Train │ └── Test └── labels/ ├── Train └──
+Test
+
+#### Renaming Species into groups (optional)
+
+You may want to train your model on species groups rtaher than on individual species names. To do this run the RenameSpecies function on each of your EventMeasure database outputs. If you do not know all the species present in the file you can the function as follows and it will lead you through renaming them:
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuUmVuYW1lU3BlY2llcyhFTURCID0gJzEwMDBGcmFtZXNfTUVPV19Qb2ludHMudHh0KVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+RenameSpecies(EMDB = &#39;1000Frames_MEOW_Points.txt)</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Alternatively, by specifying ```verbose = F``` you can run the function without any further inputs after specifying the other parameters:
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuXG5SZW5hbWVTcGVjaWVzKEVNREIgPSAnQzovWU9MT3Y1L1RyYWluaW5nL0VNT3V0cHV0cy8xMDAwX01FT1dfUG9pbnRzLnR4dCcsIHZlcmJvc2UgPSBGLCBybS5zcGVjaWVzID0gYygnc3BwJyksIGdyb3VwLm5hbWVzID0gbGlzdCgnZ2Fkb2lkJywgJ2ZsYXQnLCAnYmVudGhpYycpLCByZXBsYWNlLnNwZWNpZXMgPSBsaXN0KGMoJ2FlZ2xlZmludXMnLCAnY2FuaWN1bGEnLCAnY2FwaWxsYXRhJywgJ21lcmxhbmd1cycsICdtaW51dHVzJywgJ21vbHZhJywgJ21vcmh1YScpLGMoJ2d1cm5hcmR1cycsICdpbnRlcm1lZGl1cycsICdsaW1hbmRhJywgJ2xpbWFuZGEtZmxlc3VzJywgJ2x5cmEnLCAncGxhdGVzc2EnLCAnc2NvcnBpdXMnKSwgYygnYWxiaWRhJywgJ2Jlcm5oYXJkdXMnLCAncGFndXJ1cycsICdydWJlbnMnLCAndW5kYXR1bScsICd2dWxnYXJpcycsICdsaW5lYXJpcycpKSwgc2F2ZXBhdGggPSAnQzovWU9MT3Y1L1RyYWluaW5nL0VNT3V0cHV0cy9Vc2UvMTAwME1FT1dfVXBkYXRlZC50eHQnKVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+
 RenameSpecies(EMDB = &#39;C:/YOLOv5/Training/EMOutputs/1000_MEOW_Points.txt&#39;, verbose = F, rm.species = c(&#39;spp&#39;), group.names = list(&#39;gadoid&#39;, &#39;flat&#39;, &#39;benthic&#39;), replace.species = list(c(&#39;aeglefinus&#39;, &#39;canicula&#39;, &#39;capillata&#39;, &#39;merlangus&#39;, &#39;minutus&#39;, &#39;molva&#39;, &#39;morhua&#39;),c(&#39;gurnardus&#39;, &#39;intermedius&#39;, &#39;limanda&#39;, &#39;limanda-flesus&#39;, &#39;lyra&#39;, &#39;platessa&#39;, &#39;scorpius&#39;), c(&#39;albida&#39;, &#39;bernhardus&#39;, &#39;pagurus&#39;, &#39;rubens&#39;, &#39;undatum&#39;, &#39;vulgaris&#39;, &#39;linearis&#39;)), savepath = &#39;C:/YOLOv5/Training/EMOutputs/Use/1000MEOW_Updated.txt&#39;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="creating-the-.yaml-configuration-file" class="section level4">
-<h4>Creating the .yaml configuration file</h4>
-<p>The YOLO model needs a configuration file to know where to look for
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+
+
+#### Creating the .yaml configuration file
+
+The YOLO model needs a configuration file to know where to look for
 images and annotations and to decode class labels. We can create that
 .yaml file with the EMCreateYAML function in R. The inputs consist of a
 variety of folder and filepaths and a character vector of any species
-labels which should be removed from the annotations (e.g. where there
-are only very few annotations or where non-target species are
-annotated)</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3B0YWJsZSA8LSBFTUNyZWF0ZVlBTUwocGF0aC5FTSA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcvRU1PdXRwdXRzL1VzZScsXG4gICAgICAgICAgICAgICAgICAgICAgICBwYXRoLllPTE8gPSAnQzovWU9MT3Y1L1RyYWluaW5nJyxcbiAgICAgICAgICAgICAgICAgICAgICAgIHBhdGgudHJhaW4gPSAnQzovWU9MT3Y1L1RyYWluaW5nL2ltYWdlcy9UcmFpbicsXG4gICAgICAgICAgICAgICAgICAgICAgICBwYXRoLnZhbCA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcvaW1hZ2VzL1ZhbCcsXG4gICAgICAgICAgICAgICAgICAgICAgICBwYXRoLnRlc3QgPSAnQzovWU9MT3Y1L1RyYWluaW5nL2ltYWdlcy9UZXN0JyxcbiAgICAgICAgICAgICAgICAgICAgICAgIHJlbW92ZS5hbm5vID0gYygnc3BwJyksXG4gICAgICAgICAgICAgICAgICAgICAgICBwYXRoLnlhbWwgPSAnYzovWU9MT3Y1L1RyYWluaW5nL2NvbmZpZy55YW1sJylcbmBgYCJ9 -->
-<pre class="r"><code>sptable &lt;- EMCreateYAML(path.EM = &#39;C:/YOLOv5/Training/EMOutputs/Use&#39;,
+labels which should be removed from the annotations (e.g. where there
+are only very few annotations or where non-target species are annotated)
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuc3B0YWJsZSA8LSBFTUNyZWF0ZVlBTUwocGF0aC5FTSA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcvRU1PdXRwdXRzL1VzZScsXG4gICAgICAgICAgICAgICAgICAgICAgICBwYXRoLllPTE8gPSAnQzovWU9MT3Y1L1RyYWluaW5nJyxcbiAgICAgICAgICAgICAgICAgICAgICAgIHBhdGgudHJhaW4gPSAnQzovWU9MT3Y1L1RyYWluaW5nL2ltYWdlcy9UcmFpbicsXG4gICAgICAgICAgICAgICAgICAgICAgICBwYXRoLnZhbCA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcvaW1hZ2VzL1ZhbCcsXG4gICAgICAgICAgICAgICAgICAgICAgICBwYXRoLnRlc3QgPSAnQzovWU9MT3Y1L1RyYWluaW5nL2ltYWdlcy9UZXN0JyxcbiAgICAgICAgICAgICAgICAgICAgICAgIHJlbW92ZS5hbm5vID0gYygnc3BwJyksXG4gICAgICAgICAgICAgICAgICAgICAgICBwYXRoLnlhbWwgPSAnYzovWU9MT3Y1L1RyYWluaW5nL2NvbmZpZy55YW1sJylcbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+sptable &lt;- EMCreateYAML(path.EM = &#39;C:/YOLOv5/Training/EMOutputs/Use&#39;,
                         path.YOLO = &#39;C:/YOLOv5/Training&#39;,
                         path.train = &#39;C:/YOLOv5/Training/images/Train&#39;,
                         path.val = &#39;C:/YOLOv5/Training/images/Val&#39;,
                         path.test = &#39;C:/YOLOv5/Training/images/Test&#39;,
                         remove.anno = c(&#39;spp&#39;),
                         path.yaml = &#39;c:/YOLOv5/Training/config.yaml&#39;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>The output from this function is a showing the species index. It is
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+The output from this function is a showing the species index. It is
 critical to retain this table as it is required in subsequent steps. You
 may wish to save it as a csv file so that you can recover it if, for
-example, R crashes.</p>
-<p>It is currently neccesary to go into the config.yaml file and
-manually delete the quoattions marks surrounding the species index
-numbers for the model to recognise them as integers - this will be
-fixed.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTYXZlIHRoZSB0YWJsZVxud3JpdGUuY3N2KHNwdGFibGUsICdjOi9ZT0xPdjUvU3BlY2llc0luZGV4LmNzdicsIHJvdy5uYW1lcyA9IEYpXG5cbiMgUmVjb3ZlciB0aGUgZmlsZVxuc3B0YWJsZSA8LSByZWFkLmNzdignQzovWU9MT3Y1L1NwZWNpZXNJbmRleC5jc3YnKVxuYGBgIn0= -->
-<pre class="r"><code># Save the table
+example, R crashes.
+
+It is currently neccesary to go into the config.yaml file and manually delete the quoattions marks surrounding the species index numbers for the model to recognise them as integers - this will be fixed.
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBTYXZlIHRoZSB0YWJsZVxud3JpdGUuY3N2KHNwdGFibGUsICdjOi9ZT0xPdjUvU3BlY2llc0luZGV4LmNzdicsIHJvdy5uYW1lcyA9IEYpXG5cbiMgUmVjb3ZlciB0aGUgZmlsZVxuc3B0YWJsZSA8LSByZWFkLmNzdignQzovWU9MT3Y1L1NwZWNpZXNJbmRleC5jc3YnKVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+# Save the table
 write.csv(sptable, &#39;c:/YOLOv5/SpeciesIndex.csv&#39;, row.names = F)
 
 # Recover the file
 sptable &lt;- read.csv(&#39;C:/YOLOv5/SpeciesIndex.csv&#39;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="converting-annotations" class="section level4">
-<h4>Converting Annotations</h4>
-<p>Use the EM2YOLO function in R to extract the EM database outputs and
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+#### Converting Annotations
+
+Use the EM2YOLO function in R to extract the EM database outputs and
 convert annotations to the YOLO format. The function will also split
 images into training and testing sets randomly and copy images into the
 relevant directories. See the EM2YOLO documentation for more
-information.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuRU0yWU9MTyhFTURCID0gJ0M6L1lPTE92NS9UcmFpbmluZy9FTU91dHB1dHMvVXNlLzEwMDBNRU9XX1VwZGF0ZWQudHh0JyxcbiAgICAgICAgcGljZGlyID0gJ0M6L0Fubm90YXRpb25zLzEwMDBGcmFtZXNfTUVPVy9UcmFpbmluZycsXG4gICAgICAgIGdyb3VwX25hbWUgPSAnTUVPVycsXG4gICAgICAgIFNwZWNpZXNJbmRleCA9IHNwdGFibGUsXG4gICAgICAgIGltZ2hlaWdodCA9IDEwODAsXG4gICAgICAgIGltZ3dpZHRoID0gMTkyMCxcbiAgICAgICAgWU9MT2RpciA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcnLFxuICAgICAgICByZW1vdmUuYW5ubyA9IGMoJ3NwcCcpKVxuYGBgIn0= -->
-<pre class="r"><code>EM2YOLO(EMDB = &#39;C:/YOLOv5/Training/EMOutputs/Use/1000MEOW_Updated.txt&#39;,
+information.
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuRU0yWU9MTyhFTURCID0gJ0M6L1lPTE92NS9UcmFpbmluZy9FTU91dHB1dHMvVXNlLzEwMDBNRU9XX1VwZGF0ZWQudHh0JyxcbiAgICAgICAgcGljZGlyID0gJ0M6L0Fubm90YXRpb25zLzEwMDBGcmFtZXNfTUVPVy9UcmFpbmluZycsXG4gICAgICAgIGdyb3VwX25hbWUgPSAnTUVPVycsXG4gICAgICAgIFNwZWNpZXNJbmRleCA9IHNwdGFibGUsXG4gICAgICAgIGltZ2hlaWdodCA9IDEwODAsXG4gICAgICAgIGltZ3dpZHRoID0gMTkyMCxcbiAgICAgICAgWU9MT2RpciA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcnLFxuICAgICAgICByZW1vdmUuYW5ubyA9IGMoJ3NwcCcpKVxuYGBgXG5gYGAifQ== --&gt;
+
+```r
+```r
+EM2YOLO(EMDB = &#39;C:/YOLOv5/Training/EMOutputs/Use/1000MEOW_Updated.txt&#39;,
         picdir = &#39;C:/Annotations/1000Frames_MEOW/Training&#39;,
         group_name = &#39;MEOW&#39;,
         SpeciesIndex = sptable,
@@ -1913,23 +2019,37 @@ information.</p>
         imgwidth = 1920,
         YOLOdir = &#39;C:/YOLOv5/Training&#39;,
         remove.anno = c(&#39;spp&#39;))</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+## Resizing images
+
+YOLO expects all images to be 640x640 pixels in size to work correctly.
+As such, we need to resize the training and testing images to suit. Use
+the YOLO_img_resize function in R to do this (can be quite a slow process):
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuWU9MT19pbWdfcmVzaXplKGltZ2RpciA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcvaW1hZ2VzL1RyYWluJylcbllPTE9faW1nX3Jlc2l6ZShpbWdkaXIgPSAnQzovWU9MT3Y1L1RyYWluaW5nL2ltYWdlcy9WYWwnKVxuWU9MT19pbWdfcmVzaXplKGltZ2RpciA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcvaW1hZ2VzL1Rlc3QnKVxuYGBgIn0= --&gt;
+
+```r
+YOLO_img_resize(imgdir = &#39;C:/YOLOv5/Training/images/Train&#39;)
+YOLO_img_resize(imgdir = &#39;C:/YOLOv5/Training/images/Val&#39;)
+YOLO_img_resize(imgdir = &#39;C:/YOLOv5/Training/images/Test&#39;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-</div>
-</div>
-</div>
-<div id="resizing-images" class="section level2">
-<h2>Resizing images</h2>
-<p>YOLO expects all images to be 640x640 pixels in size to work
-correctly. As such, we need to resize the training and testing images to
-suit. Use the YOLO_img_resize function in R to do this (can be quite a
-slow process):</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
 </div>
 <div id="training-a-yolo-model" class="section level1">
 <h1>Training a YOLO model</h1>
@@ -1947,8 +2067,9 @@ Yolov5 environment created earlier. Now we can install Comet by running
 the following code in the prompt:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgYmFzaFxuIyBNYWtlIHN1cmUgdGhlIFlPTE92NSBlbnZpcm9ubWVudCBpcyBhY3RpdmUsIGlmIG5vdCBhY3RpdmF0ZSBpdDpcbmNvbmRhIGFjdGl2YXRlIFlPTE92NVxuXG4jIEluc3RhbGwgQ29tZXRcbnBpcCBpbnN0YWxsIGNvbWV0X21sXG5cbiMgRW50ZXIgeW91ciBBUEkga2V5IGFuZCBhIHByb2plY3QgbmFtZVxuc2V0IENPTUVUX0FQSV9LRVk9WTdodmFvQUd6RzdKenZEaFlWR3Znc2kxc1xuc2V0IENPTUVUX1BST0pFQ1RfTkFNRT1GaXNoRGV0ZWN0aW9uXG5gYGAifQ== -->
-<pre class="bash"><code># Make sure the YOLOv5 environment is active, if not activate it:
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgYmFzaFxuYGBgYmFzaFxuIyBNYWtlIHN1cmUgdGhlIFlPTE92NSBlbnZpcm9ubWVudCBpcyBhY3RpdmUsIGlmIG5vdCBhY3RpdmF0ZSBpdDpcbmNvbmRhIGFjdGl2YXRlIFlPTE92NVxuXG4jIEluc3RhbGwgQ29tZXRcbnBpcCBpbnN0YWxsIGNvbWV0X21sXG5cbiMgRW50ZXIgeW91ciBBUEkga2V5IGFuZCBhIHByb2plY3QgbmFtZVxuc2V0IENPTUVUX0FQSV9LRVk9WTdodmFvQUd6RzdKenZEaFlWR3Znc2kxc1xuc2V0IENPTUVUX1BST0pFQ1RfTkFNRT1GaXNoRGV0ZWN0aW9uXG5gYGBcbmBgYCJ9 -->
+<pre class="bash"><code>```bash
+# Make sure the YOLOv5 environment is active, if not activate it:
 conda activate YOLOv5
 
 # Install Comet
@@ -1957,29 +2078,57 @@ pip install comet_ml
 # Enter your API key and a project name
 set COMET_API_KEY=Y7hvaoAGzG7JzvDhYVGvgsi1s
 set COMET_PROJECT_NAME=FishDetection</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="running-model-training" class="section level2">
-<h2>Running Model Training</h2>
-<p>We are now ready to train a model. Enter the following command in to
-the command prompt:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgYmFzaFxucHl0aG9uIHRyYWluLnB5IC0taW1nIDY0MCAtLWVwb2NocyA1IC0tZGF0YSBDOi9ZT0xPdjUvVHJhaW5pbmcvY29uZmlnLnlhbWwgLS13ZWlnaHRzIHlvbG92NXMucHRcbmBgYCJ9 -->
-<pre class="bash"><code>python train.py --img 640 --epochs 5 --data C:/YOLOv5/Training/config.yaml --weights yolov5s.pt</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-</div>
-<div id="logging-training-run-with-comet" class="section level2">
-<h2>Logging training run with Comet</h2>
-<p>Once training is complete we can log the run with comet:</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgYmFzaFxuY29tZXQgdXBsb2FkIEM6XFxZT0xPdjVcXHlvbG92NVxcLmNvbWV0bWwtcnVuc1xcMjZiZTZiYThmYjc2NGMyZjgwZDhhZjA2MmZjMTA1YTQuemlwXG5gYGAifQ== -->
-<pre class="bash"><code>comet upload C:\YOLOv5\yolov5\.cometml-runs\26be6ba8fb764c2f80d8af062fc105a4.zip</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+## Running Model Training
+
+We are now ready to train a model. Enter the following commands in to the annaconda prompt, first checking that GPU resources are available to speed up training:
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgYmFzaFxuYGBgYmFzaFxucHl0aG9uIHRyYWluLnB5IC0taW1nIDY0MCAtLWVwb2NocyA1IC0tZGF0YSBDOi9ZT0xPdjUvVHJhaW5pbmcvY29uZmlnLnlhbWwgLS13ZWlnaHRzIHlvbG92NXMucHRcbmBgYFxuYGBgIn0= --&gt;
+
+```bash
+```bash
+python train.py --img 640 --epochs 5 --data C:/YOLOv5/Training/config.yaml --weights yolov5s.pt</code></pre>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+## Logging training run with Comet
+
+Once training is complete we can log the run with comet:
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgYmFzaFxuYGBgYmFzaFxuY29tZXQgdXBsb2FkIEM6XFxZT0xPdjVcXHlvbG92NVxcLmNvbWV0bWwtcnVuc1xcMjZiZTZiYThmYjc2NGMyZjgwZDhhZjA2MmZjMTA1YTQuemlwXG5gYGBcbmBgYCJ9 --&gt;
+
+```bash
+```bash
+comet upload C:\YOLOv5\yolov5\.cometml-runs\26be6ba8fb764c2f80d8af062fc105a4.zip</code></pre>
+<p>```</p>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1987,7 +2136,7 @@ the command prompt:</p>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlRyYWluaW5nIFlPTE92NSBNb2RlbHMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCmVkaXRvcl9vcHRpb25zOiANCiAgbWFya2Rvd246IA0KICAgIHdyYXA6IDcyDQotLS0NCg0KIyBDbG9uaW5nIHRoZSBZT0xPdjUgZ2l0IHJlcG8NCg0KQ3JlYXRlIGEgZGlyZWN0b3J5IGNhbGxlZCBZT0xPdjUgd2l0aCBvbmUgc3ViLWRpcmVjdG9yaWVzIHRvIGdpdmUgdGhlDQpmb2xsb3dpbmcgc3RydWN0dXJlOiAuIOKUlOKUgOKUgCBZT0xPdjUvIOKUlOKUgOKUgCBUcmFpbmluZw0KDQpSdW4gdGhlIGZvbGxvd2luZyBpbiBhbiBBbm5hY29uZGEgcHJvbXB0IHRvIGNsb25lIHRoZSBZT0xPdjUgZ2l0IHJlcG86DQoNCmBgYHtiYXNofQ0KY2QgLi9ZT0xPdjUNCmdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vdWx0cmFseXRpY3MveW9sb3Y1DQoNCmBgYA0KDQojIFNldCB1cCB0aGUgWU9MT3Y1IGNvbmRhIGVudmlyb25tZW50DQoNClRoaXMgc3RlcCBpcyBvbmx5IG5lZWRlZCBvbmNlLg0KDQpSdW4gdGhlIGZvbGxvd2luZyBpbiBhbiBBbm5hY29uZGEgUHJvbXB0IHRvIGNyZWF0ZSBhbmQgYWN0aXZhdGUgdGhlDQpjb25kYSBlbnZpcm9ubWVudDoNCg0KYGBge2Jhc2h9DQpjb25kYSBjcmVhdGUgLW4gWU9MT3Y1DQpjb25kYSBhY3RpdmF0ZSBZT0xPdjUNCmNvbmRhIGluc3RhbGwgcGlwDQpgYGANCg0KTmV4dCwgaW5zdGFsbCB0aGUgWU9MTyByZXF1aXJlbWVudHMudHh0IGZpbGUgdXNpbmcgdGhlIGZvbGxvd2luZw0KY29tbWFuZDoNCg0KYGBge2Jhc2h9DQpwaXAgaW5zdGFsbCAtciB5b2xvdjUvcmVxdWlyZW1lbnRzLnR4dA0KYGBgDQoNClRoZSBlbnZpcm9ubWVudCBpcyBub3cgcmVhZHkgZm9yIHJ1bm5pbmcgWU9MT3Y1IHNjcmlwdHMuIHRoZSBkaXJlY3RvcnkNCnN0cnVjdHVyZSBzaG91bGQgbG9vayBsaWtlIHRoaXM6DQoNCi4g4pSU4pSA4pSAIFlPTE92NS8g4pSc4pSA4pSAIHlvbG92NSDilJTilIDilIAgVHJhaW5pbmcNCg0KIyBQcmVwYXJpbmcgdGhlIFRyYWluaW5nIERhdGENCg0KIyMgRXZlbnRNZWFzdXJlIEFubm90YXRpb25zDQoNCkFzc3VtaW5nIHRoZSBkYXRhIGhhcyBiZWVuIGFubm90YXRlZCBpbiBFdmVudE1lYXN1cmUsIHRoZSBmaXJzdCBzdGFnZSBpcw0KdG8gZXhwb3J0IHRoZSBhbm5vdGF0aW9ucyBhcyBhIHRleHQgZmlsZToNCg0KKlByb2dyYW0gXD4gR2VuZXJhdGUgRGF0YWJhc2UgT3V0cHV0Kg0KDQpSZXBlYXQgdGhpcyBmb3IgYWxsIGRpcmVjdG9yaWVzIGNvbnRhaW5nIC5FTU9icyBmaWxlcywgc2F2aW5nIHRoZQ0Kb3V0cHV0cyBpbnRvIGEgY29tbW9uIGRpcmVjdG9yeSAoaWRlYWxseSB3aWh0aW4gdGhlIFlPTE92NSBkaXJlY3RvcnkNCmNyZWF0ZWQgYWJvdmUpOg0KDQpcfC4gXHzilJTilIDilIAgWU9MT3Y1L1wNClx8IOKUnOKUgOKUgCB5b2xvdjVcDQpcfCDilJTilIDilIAgVHJhaW5pbmcvXA0KXHwg4pSU4pSA4pSAIEVNT3V0cHV0cy9cDQpcfCDilJTilIDilIAgdmFyaW91cyAudHh0IERCIG91dHB1dHMNCg0KQW5ub3RhdGlvbnMgcHJvY2VzcyB1c2VkOiAxLiBFdmVyeSAxMDAwdGggZnJhbWUgaW4gZXZlcnkgdmlkZW8gd2FzDQphbm5vdGF0ZWQgMi4gRXZlcnkgZmlzaCBpbiB0aGUgZnJhbWUgdGhhdCBjb3VsZCBiZSBwb3NpdGl2ZWx5IGlkZW50aWZpZWQNCndhcyBhbm5vdGF0ZWQgMy4gRnJhbWUgY29udGFpbmluZyBubyBmaXNoIHdlcmUgYW5ub3RhdGVkIHdpdGggYSBzaW5nbGUNCidzcHAnIGxhYmVsIDQuIEFubm90YXRlZCBmcmFtZXMgd2VyZSBleHRyYWN0ZWQgYXMgSlBFR3MgdXNpbmcNCkV2ZW50TWVhc3VyZQ0KDQoNCiMjIyBDb252ZXJ0aW5nIGFubm90YXRpb25zIHRvIFlPTE8gZm9ybWF0DQoNClRoaXMgYXNzdW1lcyB0aGF0IGFubm90YXRlZCBpbWFnZXMgYXJlIHNwcmVhZCBvdmVyIG11bHRpcGxlIGRpcmVjdG9yaWVzLA0KcmVzdWx0aW5nIGluIG11bHRpcGxlIGRhdGFiYXNlIG91dHB1dHMNCg0KRm9yIGVhY2ggb2YgdGhlIEV2ZW50IE1lYXN1cmUgRGF0YWJhc2Ugb3V0cHV0cyB3ZSBuZWVkIHRvIGNvbnZlcnQgdGhlDQphbm5vdGF0aW9ucyB0byBhIFlPTE8gZm9ybWF0IGFuZCBzdG9yZSB0aGUgYW5ub3RhdGVkIGltYWdlcyBpbiB0aGUgd2F5DQpyZXF1aXJlZCBieSB0aGUgWU9MTyBtb2RlbA0KDQpGaXJzdCwgc2V0IHVwIHRoZSBpbWFnZSBkaXJlY3Rvcnkgc3RydWN0dXJlLiBJdCBzaG91bGQgZW5kIHVwIGxpa2UgdGhpczoNCg0KLiDilJTilIDilIAgWU9MT3Y1LyDilJzilIDilIAgeW9sb3Y1IOKUlOKUgOKUgCBUcmFpbmluZy8g4pSc4pSA4pSAIEVNT3V0cHV0cy8g4pSCIOKUlOKUgOKUgCB2YXJpb3VzIC50eHQNCkRCIG91dHB1dHMg4pSc4pSA4pSAIGltYWdlcy8g4pSCIOKUnOKUgOKUgCBUcmFpbiDilIIg4pSU4pSA4pSAIFRlc3Qg4pSU4pSA4pSAIGxhYmVscy8g4pSc4pSA4pSAIFRyYWluIOKUlOKUgOKUgA0KVGVzdA0KDQojIyMjIFJlbmFtaW5nIFNwZWNpZXMgaW50byBncm91cHMgKG9wdGlvbmFsKQ0KDQpZb3UgbWF5IHdhbnQgdG8gdHJhaW4geW91ciBtb2RlbCBvbiBzcGVjaWVzIGdyb3VwcyBydGFoZXIgdGhhbiBvbiBpbmRpdmlkdWFsIHNwZWNpZXMgbmFtZXMuIFRvIGRvIHRoaXMgcnVuIHRoZSBSZW5hbWVTcGVjaWVzIGZ1bmN0aW9uIG9uIGVhY2ggb2YgeW91ciBFdmVudE1lYXN1cmUgZGF0YWJhc2Ugb3V0cHV0cy4gSWYgeW91IGRvIG5vdCBrbm93IGFsbCB0aGUgc3BlY2llcyBwcmVzZW50IGluIHRoZSBmaWxlIHlvdSBjYW4gdGhlIGZ1bmN0aW9uIGFzIGZvbGxvd3MgYW5kIGl0IHdpbGwgbGVhZCB5b3UgdGhyb3VnaCByZW5hbWluZyB0aGVtOg0KDQpgYGB7cn0NClJlbmFtZVNwZWNpZXMoRU1EQiA9ICcxMDAwRnJhbWVzX01FT1dfUG9pbnRzLnR4dCkNCmBgYA0KDQpBbHRlcm5hdGl2ZWx5LCBieSBzcGVjaWZ5aW5nIGBgYHZlcmJvc2UgPSBGYGBgIHlvdSBjYW4gcnVuIHRoZSBmdW5jdGlvbiB3aXRob3V0IGFueSBmdXJ0aGVyIGlucHV0cyBhZnRlciBzcGVjaWZ5aW5nIHRoZSBvdGhlciBwYXJhbWV0ZXJzOg0KDQpgYGB7cn0NCg0KUmVuYW1lU3BlY2llcyhFTURCID0gJ0M6L1lPTE92NS9UcmFpbmluZy9FTU91dHB1dHMvMTAwMF9NRU9XX1BvaW50cy50eHQnLCB2ZXJib3NlID0gRiwgcm0uc3BlY2llcyA9IGMoJ3NwcCcpLCBncm91cC5uYW1lcyA9IGxpc3QoJ2dhZG9pZCcsICdmbGF0JywgJ2JlbnRoaWMnKSwgcmVwbGFjZS5zcGVjaWVzID0gbGlzdChjKCdhZWdsZWZpbnVzJywgJ2NhbmljdWxhJywgJ2NhcGlsbGF0YScsICdtZXJsYW5ndXMnLCAnbWludXR1cycsICdtb2x2YScsICdtb3JodWEnKSxjKCdndXJuYXJkdXMnLCAnaW50ZXJtZWRpdXMnLCAnbGltYW5kYScsICdsaW1hbmRhLWZsZXN1cycsICdseXJhJywgJ3BsYXRlc3NhJywgJ3Njb3JwaXVzJyksIGMoJ2FsYmlkYScsICdiZXJuaGFyZHVzJywgJ3BhZ3VydXMnLCAncnViZW5zJywgJ3VuZGF0dW0nLCAndnVsZ2FyaXMnLCAnbGluZWFyaXMnKSksIHNhdmVwYXRoID0gJ0M6L1lPTE92NS9UcmFpbmluZy9FTU91dHB1dHMvVXNlLzEwMDBNRU9XX1VwZGF0ZWQudHh0JykNCmBgYA0KDQoNCg0KIyMjIyBDcmVhdGluZyB0aGUgLnlhbWwgY29uZmlndXJhdGlvbiBmaWxlDQoNClRoZSBZT0xPIG1vZGVsIG5lZWRzIGEgY29uZmlndXJhdGlvbiBmaWxlIHRvIGtub3cgd2hlcmUgdG8gbG9vayBmb3INCmltYWdlcyBhbmQgYW5ub3RhdGlvbnMgYW5kIHRvIGRlY29kZSBjbGFzcyBsYWJlbHMuIFdlIGNhbiBjcmVhdGUgdGhhdA0KLnlhbWwgZmlsZSB3aXRoIHRoZSBFTUNyZWF0ZVlBTUwgZnVuY3Rpb24gaW4gUi4gVGhlIGlucHV0cyBjb25zaXN0IG9mIGENCnZhcmlldHkgb2YgZm9sZGVyIGFuZCBmaWxlcGF0aHMgYW5kIGEgY2hhcmFjdGVyIHZlY3RvciBvZiBhbnkgc3BlY2llcw0KbGFiZWxzIHdoaWNoIHNob3VsZCBiZSByZW1vdmVkIGZyb20gdGhlIGFubm90YXRpb25zIChlLmcuIHdoZXJlIHRoZXJlDQphcmUgb25seSB2ZXJ5IGZldyBhbm5vdGF0aW9ucyBvciB3aGVyZSBub24tdGFyZ2V0IHNwZWNpZXMgYXJlIGFubm90YXRlZCkNCg0KYGBge3J9DQpzcHRhYmxlIDwtIEVNQ3JlYXRlWUFNTChwYXRoLkVNID0gJ0M6L1lPTE92NS9UcmFpbmluZy9FTU91dHB1dHMvVXNlJywNCiAgICAgICAgICAgICAgICAgICAgICAgIHBhdGguWU9MTyA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcnLA0KICAgICAgICAgICAgICAgICAgICAgICAgcGF0aC50cmFpbiA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcvaW1hZ2VzL1RyYWluJywNCiAgICAgICAgICAgICAgICAgICAgICAgIHBhdGgudmFsID0gJ0M6L1lPTE92NS9UcmFpbmluZy9pbWFnZXMvVmFsJywNCiAgICAgICAgICAgICAgICAgICAgICAgIHBhdGgudGVzdCA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcvaW1hZ2VzL1Rlc3QnLA0KICAgICAgICAgICAgICAgICAgICAgICAgcmVtb3ZlLmFubm8gPSBjKCdzcHAnKSwNCiAgICAgICAgICAgICAgICAgICAgICAgIHBhdGgueWFtbCA9ICdjOi9ZT0xPdjUvVHJhaW5pbmcvY29uZmlnLnlhbWwnKQ0KYGBgDQoNClRoZSBvdXRwdXQgZnJvbSB0aGlzIGZ1bmN0aW9uIGlzIGEgc2hvd2luZyB0aGUgc3BlY2llcyBpbmRleC4gSXQgaXMNCmNyaXRpY2FsIHRvIHJldGFpbiB0aGlzIHRhYmxlIGFzIGl0IGlzIHJlcXVpcmVkIGluIHN1YnNlcXVlbnQgc3RlcHMuIFlvdQ0KbWF5IHdpc2ggdG8gc2F2ZSBpdCBhcyBhIGNzdiBmaWxlIHNvIHRoYXQgeW91IGNhbiByZWNvdmVyIGl0IGlmLCBmb3INCmV4YW1wbGUsIFIgY3Jhc2hlcy4NCg0KSXQgaXMgY3VycmVudGx5IG5lY2Nlc2FyeSB0byBnbyBpbnRvIHRoZSBjb25maWcueWFtbCBmaWxlIGFuZCBtYW51YWxseSBkZWxldGUgdGhlIHF1b2F0dGlvbnMgbWFya3Mgc3Vycm91bmRpbmcgdGhlIHNwZWNpZXMgaW5kZXggbnVtYmVycyBmb3IgdGhlIG1vZGVsIHRvIHJlY29nbmlzZSB0aGVtIGFzIGludGVnZXJzIC0gdGhpcyB3aWxsIGJlIGZpeGVkLg0KDQpgYGB7cn0NCiMgU2F2ZSB0aGUgdGFibGUNCndyaXRlLmNzdihzcHRhYmxlLCAnYzovWU9MT3Y1L1NwZWNpZXNJbmRleC5jc3YnLCByb3cubmFtZXMgPSBGKQ0KDQojIFJlY292ZXIgdGhlIGZpbGUNCnNwdGFibGUgPC0gcmVhZC5jc3YoJ0M6L1lPTE92NS9TcGVjaWVzSW5kZXguY3N2JykNCmBgYA0KDQojIyMjIENvbnZlcnRpbmcgQW5ub3RhdGlvbnMNCg0KVXNlIHRoZSBFTTJZT0xPIGZ1bmN0aW9uIGluIFIgdG8gZXh0cmFjdCB0aGUgRU0gZGF0YWJhc2Ugb3V0cHV0cyBhbmQNCmNvbnZlcnQgYW5ub3RhdGlvbnMgdG8gdGhlIFlPTE8gZm9ybWF0LiBUaGUgZnVuY3Rpb24gd2lsbCBhbHNvIHNwbGl0DQppbWFnZXMgaW50byB0cmFpbmluZyBhbmQgdGVzdGluZyBzZXRzIHJhbmRvbWx5IGFuZCBjb3B5IGltYWdlcyBpbnRvIHRoZQ0KcmVsZXZhbnQgZGlyZWN0b3JpZXMuIFNlZSB0aGUgRU0yWU9MTyBkb2N1bWVudGF0aW9uIGZvciBtb3JlDQppbmZvcm1hdGlvbi4NCg0KYGBge3J9DQpFTTJZT0xPKEVNREIgPSAnQzovWU9MT3Y1L1RyYWluaW5nL0VNT3V0cHV0cy9Vc2UvMTAwME1FT1dfVXBkYXRlZC50eHQnLA0KICAgICAgICBwaWNkaXIgPSAnQzovQW5ub3RhdGlvbnMvMTAwMEZyYW1lc19NRU9XL1RyYWluaW5nJywNCiAgICAgICAgZ3JvdXBfbmFtZSA9ICdNRU9XJywNCiAgICAgICAgU3BlY2llc0luZGV4ID0gc3B0YWJsZSwNCiAgICAgICAgaW1naGVpZ2h0ID0gMTA4MCwNCiAgICAgICAgaW1nd2lkdGggPSAxOTIwLA0KICAgICAgICBZT0xPZGlyID0gJ0M6L1lPTE92NS9UcmFpbmluZycsDQogICAgICAgIHJlbW92ZS5hbm5vID0gYygnc3BwJykpDQpgYGANCg0KIyMgUmVzaXppbmcgaW1hZ2VzDQoNCllPTE8gZXhwZWN0cyBhbGwgaW1hZ2VzIHRvIGJlIDY0MHg2NDAgcGl4ZWxzIGluIHNpemUgdG8gd29yayBjb3JyZWN0bHkuDQpBcyBzdWNoLCB3ZSBuZWVkIHRvIHJlc2l6ZSB0aGUgdHJhaW5pbmcgYW5kIHRlc3RpbmcgaW1hZ2VzIHRvIHN1aXQuIFVzZQ0KdGhlIFlPTE9faW1nX3Jlc2l6ZSBmdW5jdGlvbiBpbiBSIHRvIGRvIHRoaXMgKGNhbiBiZSBxdWl0ZSBhIHNsb3cgcHJvY2Vzcyk6DQoNCmBgYHtyfQ0KWU9MT19pbWdfcmVzaXplKGltZ2RpciA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcvaW1hZ2VzL1RyYWluJykNCllPTE9faW1nX3Jlc2l6ZShpbWdkaXIgPSAnQzovWU9MT3Y1L1RyYWluaW5nL2ltYWdlcy9WYWwnKQ0KWU9MT19pbWdfcmVzaXplKGltZ2RpciA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcvaW1hZ2VzL1Rlc3QnKQ0KYGBgDQoNCiMgVHJhaW5pbmcgYSBZT0xPIG1vZGVsDQoNCldlIGFyZSBub3cgcmVhZHkgdG8gdHJhaW4gYSBZT0xPdjUgbW9kZWwuIFRoZSBwcm9jZXNzIG9mIGRldmVsb3BpbmcNCmNvbXB1dGVyIHZpc2lvbiBtb2RlbHMgaXMgYW4gaXRlcmF0aXZlIG9uZSwgc28gaXQgaXMgcmVjb21tZW5kZWQgdG8gdXNlDQpDb21ldCB0byBsb2cgdHJhaW5pbmcgcnVucywgc2F2ZSBoeXBlciBwYXJhbWV0ZXJzIGFuZCB2aXN1YWxpc2UgdHJhaW5pbmcNCmFuZCByZXN1bHRzLg0KDQojIyBTZXR0aW5nIHVwIENvbWV0DQoNCkZpcnN0LCBnbyB0byA8aHR0cHM6Ly93d3cuY29tZXQuY29tL3NpZ251cD4gYW5kIGNyZWF0ZSBhIENvbWV0IGFjY291bnQuDQpPbmNlIHlvdSBjcmVhdGUgeW91ciBhY2NvdW50IGFuZCBsb2cgaW4geW91IHdpbGwgc2VlIHlvdXIgQVBJIGtleS4gTWFrZQ0KYSBub3RlIG9mIHRoaXMgLSB3ZSB3aWxsIG5lZWQgaXQgdG8gYWNjZXNzIENvbWV0IGxhdGVyLg0KDQpOb3csIGdvIGJhY2sgdG8geW91ciBhbm5hY29uZGEgcHJvbXB0IGFuZCBtYWtlIHN1cmUgeW91IGFyZSBpbiB0aGUNCllvbG92NSBlbnZpcm9ubWVudCBjcmVhdGVkIGVhcmxpZXIuIE5vdyB3ZSBjYW4gaW5zdGFsbCBDb21ldCBieSBydW5uaW5nDQp0aGUgZm9sbG93aW5nIGNvZGUgaW4gdGhlIHByb21wdDoNCg0KYGBge2Jhc2h9DQojIE1ha2Ugc3VyZSB0aGUgWU9MT3Y1IGVudmlyb25tZW50IGlzIGFjdGl2ZSwgaWYgbm90IGFjdGl2YXRlIGl0Og0KY29uZGEgYWN0aXZhdGUgWU9MT3Y1DQoNCiMgSW5zdGFsbCBDb21ldA0KcGlwIGluc3RhbGwgY29tZXRfbWwNCg0KIyBFbnRlciB5b3VyIEFQSSBrZXkgYW5kIGEgcHJvamVjdCBuYW1lDQpzZXQgQ09NRVRfQVBJX0tFWT1ZN2h2YW9BR3pHN0p6dkRoWVZHdmdzaTFzDQpzZXQgQ09NRVRfUFJPSkVDVF9OQU1FPUZpc2hEZXRlY3Rpb24NCmBgYA0KDQojIyBSdW5uaW5nIE1vZGVsIFRyYWluaW5nDQoNCldlIGFyZSBub3cgcmVhZHkgdG8gdHJhaW4gYSBtb2RlbC4gRW50ZXIgdGhlIGZvbGxvd2luZyBjb21tYW5kIGluIHRvIHRoZSBjb21tYW5kIHByb21wdDoNCg0KYGBge2Jhc2h9DQpweXRob24gdHJhaW4ucHkgLS1pbWcgNjQwIC0tZXBvY2hzIDUgLS1kYXRhIEM6L1lPTE92NS9UcmFpbmluZy9jb25maWcueWFtbCAtLXdlaWdodHMgeW9sb3Y1cy5wdA0KYGBgDQoNCiMjIExvZ2dpbmcgdHJhaW5pbmcgcnVuIHdpdGggQ29tZXQNCg0KT25jZSB0cmFpbmluZyBpcyBjb21wbGV0ZSB3ZSBjYW4gbG9nIHRoZSBydW4gd2l0aCBjb21ldDoNCg0KYGBge2Jhc2h9DQpjb21ldCB1cGxvYWQgQzpcWU9MT3Y1XHlvbG92NVwuY29tZXRtbC1ydW5zXDI2YmU2YmE4ZmI3NjRjMmY4MGQ4YWYwNjJmYzEwNWE0LnppcA0KYGBgDQoNCg0KDQoNCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlRyYWluaW5nIFlPTE92NSBNb2RlbHMiDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCmVkaXRvcl9vcHRpb25zOiANCiAgbWFya2Rvd246IA0KICAgIHdyYXA6IDcyDQotLS0NCg0KIyBDbG9uaW5nIHRoZSBZT0xPdjUgZ2l0IHJlcG8NCg0KQ3JlYXRlIGEgZGlyZWN0b3J5IGNhbGxlZCBZT0xPdjUgd2l0aCBvbmUgc3ViLWRpcmVjdG9yaWVzIHRvIGdpdmUgdGhlDQpmb2xsb3dpbmcgc3RydWN0dXJlOiAuIOKUlOKUgOKUgCBZT0xPdjUvIOKUlOKUgOKUgCBUcmFpbmluZw0KDQpSdW4gdGhlIGZvbGxvd2luZyBpbiBhbiBBbm5hY29uZGEgcHJvbXB0IHRvIGNsb25lIHRoZSBZT0xPdjUgZ2l0IHJlcG86DQoNCmBgYHtiYXNofQ0KY2QgLi9ZT0xPdjUNCmdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vdWx0cmFseXRpY3MveW9sb3Y1DQoNCmBgYA0KDQojIFNldCB1cCB0aGUgWU9MT3Y1IGNvbmRhIGVudmlyb25tZW50DQoNClRoaXMgc3RlcCBpcyBvbmx5IG5lZWRlZCBvbmNlLg0KDQpSdW4gdGhlIGZvbGxvd2luZyBpbiBhbiBBbm5hY29uZGEgUHJvbXB0IHRvIGNyZWF0ZSBhbmQgYWN0aXZhdGUgdGhlDQpjb25kYSBlbnZpcm9ubWVudDoNCg0KYGBge2Jhc2h9DQpjb25kYSBjcmVhdGUgLW4gWU9MT3Y1Mg0KY29uZGEgYWN0aXZhdGUgWU9MT3Y1Mg0KY29uZGEgaW5zdGFsbCBwaXANCmBgYA0KDQpOZXh0LCBpbnN0YWxsIHRoZSBZT0xPIHJlcXVpcmVtZW50cy50eHQgZmlsZSBhbmQgdGhlIGNvcnJlY3QgdmVyc2lvbiBvZiBQeXRvcmNoIHRvIGFsbG93IHRoZSBHUFUgdG8gYmUgdXNlZCB1c2luZyB0aGUgZm9sbG93aW5nIGNvbW1hbmRzOg0KDQpgYGB7YmFzaH0NCiMgSW5zdGFsbCBweXRvcmNoIC0gZ290IHRvIGh0dHBzOi8vcHl0b3JjaC5vcmcvIHRvIGdldCB0aGUgY29ycmVjdCBjb21tYW5kIGZvciB5b3Ugc3lzdGVtDQpjb25kYSBpbnN0YWxsIHB5dG9yY2ggdG9yY2h2aXNpb24gdG9yY2hhdWRpbyBweXRvcmNoLWN1ZGE9MTEuOCAtYyBweXRvcmNoIC1jIG52aWRpYQ0KDQojIEluc3RhbGwgcmVxdWlyZW1lbnRzDQpwaXAgaW5zdGFsbCAtciB5b2xvdjUvcmVxdWlyZW1lbnRzLnR4dA0KDQpgYGANCg0KVGhlIGVudmlyb25tZW50IGlzIG5vdyByZWFkeSBmb3IgcnVubmluZyBZT0xPdjUgc2NyaXB0cy4gdGhlIGRpcmVjdG9yeQ0Kc3RydWN0dXJlIHNob3VsZCBsb29rIGxpa2UgdGhpczoNCg0KLiDilJTilIDilIAgWU9MT3Y1LyDilJzilIDilIAgeW9sb3Y1IOKUlOKUgOKUgCBUcmFpbmluZw0KDQojIFByZXBhcmluZyB0aGUgVHJhaW5pbmcgRGF0YQ0KDQojIyBFdmVudE1lYXN1cmUgQW5ub3RhdGlvbnMNCg0KQXNzdW1pbmcgdGhlIGRhdGEgaGFzIGJlZW4gYW5ub3RhdGVkIGluIEV2ZW50TWVhc3VyZSwgdGhlIGZpcnN0IHN0YWdlIGlzDQp0byBleHBvcnQgdGhlIGFubm90YXRpb25zIGFzIGEgdGV4dCBmaWxlOg0KDQoqUHJvZ3JhbSBcPiBHZW5lcmF0ZSBEYXRhYmFzZSBPdXRwdXQqDQoNClJlcGVhdCB0aGlzIGZvciBhbGwgZGlyZWN0b3JpZXMgY29udGFpbmcgLkVNT2JzIGZpbGVzLCBzYXZpbmcgdGhlDQpvdXRwdXRzIGludG8gYSBjb21tb24gZGlyZWN0b3J5IChpZGVhbGx5IHdpaHRpbiB0aGUgWU9MT3Y1IGRpcmVjdG9yeQ0KY3JlYXRlZCBhYm92ZSk6DQoNClx8LiBcfOKUlOKUgOKUgCBZT0xPdjUvXA0KXHwg4pSc4pSA4pSAIHlvbG92NVwNClx8IOKUlOKUgOKUgCBUcmFpbmluZy9cDQpcfCDilJTilIDilIAgRU1PdXRwdXRzL1wNClx8IOKUlOKUgOKUgCB2YXJpb3VzIC50eHQgREIgb3V0cHV0cw0KDQpBbm5vdGF0aW9ucyBwcm9jZXNzIHVzZWQ6IDEuIEV2ZXJ5IDEwMDB0aCBmcmFtZSBpbiBldmVyeSB2aWRlbyB3YXMNCmFubm90YXRlZCAyLiBFdmVyeSBmaXNoIGluIHRoZSBmcmFtZSB0aGF0IGNvdWxkIGJlIHBvc2l0aXZlbHkgaWRlbnRpZmllZA0Kd2FzIGFubm90YXRlZCAzLiBGcmFtZSBjb250YWluaW5nIG5vIGZpc2ggd2VyZSBhbm5vdGF0ZWQgd2l0aCBhIHNpbmdsZQ0KJ3NwcCcgbGFiZWwgNC4gQW5ub3RhdGVkIGZyYW1lcyB3ZXJlIGV4dHJhY3RlZCBhcyBKUEVHcyB1c2luZw0KRXZlbnRNZWFzdXJlDQoNCg0KIyMjIENvbnZlcnRpbmcgYW5ub3RhdGlvbnMgdG8gWU9MTyBmb3JtYXQNCg0KVGhpcyBhc3N1bWVzIHRoYXQgYW5ub3RhdGVkIGltYWdlcyBhcmUgc3ByZWFkIG92ZXIgbXVsdGlwbGUgZGlyZWN0b3JpZXMsDQpyZXN1bHRpbmcgaW4gbXVsdGlwbGUgZGF0YWJhc2Ugb3V0cHV0cw0KDQpGb3IgZWFjaCBvZiB0aGUgRXZlbnQgTWVhc3VyZSBEYXRhYmFzZSBvdXRwdXRzIHdlIG5lZWQgdG8gY29udmVydCB0aGUNCmFubm90YXRpb25zIHRvIGEgWU9MTyBmb3JtYXQgYW5kIHN0b3JlIHRoZSBhbm5vdGF0ZWQgaW1hZ2VzIGluIHRoZSB3YXkNCnJlcXVpcmVkIGJ5IHRoZSBZT0xPIG1vZGVsDQoNCkZpcnN0LCBzZXQgdXAgdGhlIGltYWdlIGRpcmVjdG9yeSBzdHJ1Y3R1cmUuIEl0IHNob3VsZCBlbmQgdXAgbGlrZSB0aGlzOg0KDQouIOKUlOKUgOKUgCBZT0xPdjUvIOKUnOKUgOKUgCB5b2xvdjUg4pSU4pSA4pSAIFRyYWluaW5nLyDilJzilIDilIAgRU1PdXRwdXRzLyDilIIg4pSU4pSA4pSAIHZhcmlvdXMgLnR4dA0KREIgb3V0cHV0cyDilJzilIDilIAgaW1hZ2VzLyDilIIg4pSc4pSA4pSAIFRyYWluIOKUgiDilJTilIDilIAgVGVzdCDilJTilIDilIAgbGFiZWxzLyDilJzilIDilIAgVHJhaW4g4pSU4pSA4pSADQpUZXN0DQoNCiMjIyMgUmVuYW1pbmcgU3BlY2llcyBpbnRvIGdyb3VwcyAob3B0aW9uYWwpDQoNCllvdSBtYXkgd2FudCB0byB0cmFpbiB5b3VyIG1vZGVsIG9uIHNwZWNpZXMgZ3JvdXBzIHJ0YWhlciB0aGFuIG9uIGluZGl2aWR1YWwgc3BlY2llcyBuYW1lcy4gVG8gZG8gdGhpcyBydW4gdGhlIFJlbmFtZVNwZWNpZXMgZnVuY3Rpb24gb24gZWFjaCBvZiB5b3VyIEV2ZW50TWVhc3VyZSBkYXRhYmFzZSBvdXRwdXRzLiBJZiB5b3UgZG8gbm90IGtub3cgYWxsIHRoZSBzcGVjaWVzIHByZXNlbnQgaW4gdGhlIGZpbGUgeW91IGNhbiB0aGUgZnVuY3Rpb24gYXMgZm9sbG93cyBhbmQgaXQgd2lsbCBsZWFkIHlvdSB0aHJvdWdoIHJlbmFtaW5nIHRoZW06DQoNCmBgYHtyfQ0KUmVuYW1lU3BlY2llcyhFTURCID0gJzEwMDBGcmFtZXNfTUVPV19Qb2ludHMudHh0KQ0KYGBgDQoNCkFsdGVybmF0aXZlbHksIGJ5IHNwZWNpZnlpbmcgYGBgdmVyYm9zZSA9IEZgYGAgeW91IGNhbiBydW4gdGhlIGZ1bmN0aW9uIHdpdGhvdXQgYW55IGZ1cnRoZXIgaW5wdXRzIGFmdGVyIHNwZWNpZnlpbmcgdGhlIG90aGVyIHBhcmFtZXRlcnM6DQoNCmBgYHtyfQ0KDQpSZW5hbWVTcGVjaWVzKEVNREIgPSAnQzovWU9MT3Y1L1RyYWluaW5nL0VNT3V0cHV0cy8xMDAwX01FT1dfUG9pbnRzLnR4dCcsIHZlcmJvc2UgPSBGLCBybS5zcGVjaWVzID0gYygnc3BwJyksIGdyb3VwLm5hbWVzID0gbGlzdCgnZ2Fkb2lkJywgJ2ZsYXQnLCAnYmVudGhpYycpLCByZXBsYWNlLnNwZWNpZXMgPSBsaXN0KGMoJ2FlZ2xlZmludXMnLCAnY2FuaWN1bGEnLCAnY2FwaWxsYXRhJywgJ21lcmxhbmd1cycsICdtaW51dHVzJywgJ21vbHZhJywgJ21vcmh1YScpLGMoJ2d1cm5hcmR1cycsICdpbnRlcm1lZGl1cycsICdsaW1hbmRhJywgJ2xpbWFuZGEtZmxlc3VzJywgJ2x5cmEnLCAncGxhdGVzc2EnLCAnc2NvcnBpdXMnKSwgYygnYWxiaWRhJywgJ2Jlcm5oYXJkdXMnLCAncGFndXJ1cycsICdydWJlbnMnLCAndW5kYXR1bScsICd2dWxnYXJpcycsICdsaW5lYXJpcycpKSwgc2F2ZXBhdGggPSAnQzovWU9MT3Y1L1RyYWluaW5nL0VNT3V0cHV0cy9Vc2UvMTAwME1FT1dfVXBkYXRlZC50eHQnKQ0KYGBgDQoNCg0KDQojIyMjIENyZWF0aW5nIHRoZSAueWFtbCBjb25maWd1cmF0aW9uIGZpbGUNCg0KVGhlIFlPTE8gbW9kZWwgbmVlZHMgYSBjb25maWd1cmF0aW9uIGZpbGUgdG8ga25vdyB3aGVyZSB0byBsb29rIGZvcg0KaW1hZ2VzIGFuZCBhbm5vdGF0aW9ucyBhbmQgdG8gZGVjb2RlIGNsYXNzIGxhYmVscy4gV2UgY2FuIGNyZWF0ZSB0aGF0DQoueWFtbCBmaWxlIHdpdGggdGhlIEVNQ3JlYXRlWUFNTCBmdW5jdGlvbiBpbiBSLiBUaGUgaW5wdXRzIGNvbnNpc3Qgb2YgYQ0KdmFyaWV0eSBvZiBmb2xkZXIgYW5kIGZpbGVwYXRocyBhbmQgYSBjaGFyYWN0ZXIgdmVjdG9yIG9mIGFueSBzcGVjaWVzDQpsYWJlbHMgd2hpY2ggc2hvdWxkIGJlIHJlbW92ZWQgZnJvbSB0aGUgYW5ub3RhdGlvbnMgKGUuZy4gd2hlcmUgdGhlcmUNCmFyZSBvbmx5IHZlcnkgZmV3IGFubm90YXRpb25zIG9yIHdoZXJlIG5vbi10YXJnZXQgc3BlY2llcyBhcmUgYW5ub3RhdGVkKQ0KDQpgYGB7cn0NCnNwdGFibGUgPC0gRU1DcmVhdGVZQU1MKHBhdGguRU0gPSAnQzovWU9MT3Y1L1RyYWluaW5nL0VNT3V0cHV0cy9Vc2UnLA0KICAgICAgICAgICAgICAgICAgICAgICAgcGF0aC5ZT0xPID0gJ0M6L1lPTE92NS9UcmFpbmluZycsDQogICAgICAgICAgICAgICAgICAgICAgICBwYXRoLnRyYWluID0gJ0M6L1lPTE92NS9UcmFpbmluZy9pbWFnZXMvVHJhaW4nLA0KICAgICAgICAgICAgICAgICAgICAgICAgcGF0aC52YWwgPSAnQzovWU9MT3Y1L1RyYWluaW5nL2ltYWdlcy9WYWwnLA0KICAgICAgICAgICAgICAgICAgICAgICAgcGF0aC50ZXN0ID0gJ0M6L1lPTE92NS9UcmFpbmluZy9pbWFnZXMvVGVzdCcsDQogICAgICAgICAgICAgICAgICAgICAgICByZW1vdmUuYW5ubyA9IGMoJ3NwcCcpLA0KICAgICAgICAgICAgICAgICAgICAgICAgcGF0aC55YW1sID0gJ2M6L1lPTE92NS9UcmFpbmluZy9jb25maWcueWFtbCcpDQpgYGANCg0KVGhlIG91dHB1dCBmcm9tIHRoaXMgZnVuY3Rpb24gaXMgYSBzaG93aW5nIHRoZSBzcGVjaWVzIGluZGV4LiBJdCBpcw0KY3JpdGljYWwgdG8gcmV0YWluIHRoaXMgdGFibGUgYXMgaXQgaXMgcmVxdWlyZWQgaW4gc3Vic2VxdWVudCBzdGVwcy4gWW91DQptYXkgd2lzaCB0byBzYXZlIGl0IGFzIGEgY3N2IGZpbGUgc28gdGhhdCB5b3UgY2FuIHJlY292ZXIgaXQgaWYsIGZvcg0KZXhhbXBsZSwgUiBjcmFzaGVzLg0KDQpJdCBpcyBjdXJyZW50bHkgbmVjY2VzYXJ5IHRvIGdvIGludG8gdGhlIGNvbmZpZy55YW1sIGZpbGUgYW5kIG1hbnVhbGx5IGRlbGV0ZSB0aGUgcXVvYXR0aW9ucyBtYXJrcyBzdXJyb3VuZGluZyB0aGUgc3BlY2llcyBpbmRleCBudW1iZXJzIGZvciB0aGUgbW9kZWwgdG8gcmVjb2duaXNlIHRoZW0gYXMgaW50ZWdlcnMgLSB0aGlzIHdpbGwgYmUgZml4ZWQuDQoNCmBgYHtyfQ0KIyBTYXZlIHRoZSB0YWJsZQ0Kd3JpdGUuY3N2KHNwdGFibGUsICdjOi9ZT0xPdjUvU3BlY2llc0luZGV4LmNzdicsIHJvdy5uYW1lcyA9IEYpDQoNCiMgUmVjb3ZlciB0aGUgZmlsZQ0Kc3B0YWJsZSA8LSByZWFkLmNzdignQzovWU9MT3Y1L1NwZWNpZXNJbmRleC5jc3YnKQ0KYGBgDQoNCiMjIyMgQ29udmVydGluZyBBbm5vdGF0aW9ucw0KDQpVc2UgdGhlIEVNMllPTE8gZnVuY3Rpb24gaW4gUiB0byBleHRyYWN0IHRoZSBFTSBkYXRhYmFzZSBvdXRwdXRzIGFuZA0KY29udmVydCBhbm5vdGF0aW9ucyB0byB0aGUgWU9MTyBmb3JtYXQuIFRoZSBmdW5jdGlvbiB3aWxsIGFsc28gc3BsaXQNCmltYWdlcyBpbnRvIHRyYWluaW5nIGFuZCB0ZXN0aW5nIHNldHMgcmFuZG9tbHkgYW5kIGNvcHkgaW1hZ2VzIGludG8gdGhlDQpyZWxldmFudCBkaXJlY3Rvcmllcy4gU2VlIHRoZSBFTTJZT0xPIGRvY3VtZW50YXRpb24gZm9yIG1vcmUNCmluZm9ybWF0aW9uLg0KDQpgYGB7cn0NCkVNMllPTE8oRU1EQiA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcvRU1PdXRwdXRzL1VzZS8xMDAwTUVPV19VcGRhdGVkLnR4dCcsDQogICAgICAgIHBpY2RpciA9ICdDOi9Bbm5vdGF0aW9ucy8xMDAwRnJhbWVzX01FT1cvVHJhaW5pbmcnLA0KICAgICAgICBncm91cF9uYW1lID0gJ01FT1cnLA0KICAgICAgICBTcGVjaWVzSW5kZXggPSBzcHRhYmxlLA0KICAgICAgICBpbWdoZWlnaHQgPSAxMDgwLA0KICAgICAgICBpbWd3aWR0aCA9IDE5MjAsDQogICAgICAgIFlPTE9kaXIgPSAnQzovWU9MT3Y1L1RyYWluaW5nJywNCiAgICAgICAgcmVtb3ZlLmFubm8gPSBjKCdzcHAnKSkNCmBgYA0KDQojIyBSZXNpemluZyBpbWFnZXMNCg0KWU9MTyBleHBlY3RzIGFsbCBpbWFnZXMgdG8gYmUgNjQweDY0MCBwaXhlbHMgaW4gc2l6ZSB0byB3b3JrIGNvcnJlY3RseS4NCkFzIHN1Y2gsIHdlIG5lZWQgdG8gcmVzaXplIHRoZSB0cmFpbmluZyBhbmQgdGVzdGluZyBpbWFnZXMgdG8gc3VpdC4gVXNlDQp0aGUgWU9MT19pbWdfcmVzaXplIGZ1bmN0aW9uIGluIFIgdG8gZG8gdGhpcyAoY2FuIGJlIHF1aXRlIGEgc2xvdyBwcm9jZXNzKToNCg0KYGBge3J9DQpZT0xPX2ltZ19yZXNpemUoaW1nZGlyID0gJ0M6L1lPTE92NS9UcmFpbmluZy9pbWFnZXMvVHJhaW4nKQ0KWU9MT19pbWdfcmVzaXplKGltZ2RpciA9ICdDOi9ZT0xPdjUvVHJhaW5pbmcvaW1hZ2VzL1ZhbCcpDQpZT0xPX2ltZ19yZXNpemUoaW1nZGlyID0gJ0M6L1lPTE92NS9UcmFpbmluZy9pbWFnZXMvVGVzdCcpDQpgYGANCg0KIyBUcmFpbmluZyBhIFlPTE8gbW9kZWwNCg0KV2UgYXJlIG5vdyByZWFkeSB0byB0cmFpbiBhIFlPTE92NSBtb2RlbC4gVGhlIHByb2Nlc3Mgb2YgZGV2ZWxvcGluZw0KY29tcHV0ZXIgdmlzaW9uIG1vZGVscyBpcyBhbiBpdGVyYXRpdmUgb25lLCBzbyBpdCBpcyByZWNvbW1lbmRlZCB0byB1c2UNCkNvbWV0IHRvIGxvZyB0cmFpbmluZyBydW5zLCBzYXZlIGh5cGVyIHBhcmFtZXRlcnMgYW5kIHZpc3VhbGlzZSB0cmFpbmluZw0KYW5kIHJlc3VsdHMuDQoNCiMjIFNldHRpbmcgdXAgQ29tZXQNCg0KRmlyc3QsIGdvIHRvIDxodHRwczovL3d3dy5jb21ldC5jb20vc2lnbnVwPiBhbmQgY3JlYXRlIGEgQ29tZXQgYWNjb3VudC4NCk9uY2UgeW91IGNyZWF0ZSB5b3VyIGFjY291bnQgYW5kIGxvZyBpbiB5b3Ugd2lsbCBzZWUgeW91ciBBUEkga2V5LiBNYWtlDQphIG5vdGUgb2YgdGhpcyAtIHdlIHdpbGwgbmVlZCBpdCB0byBhY2Nlc3MgQ29tZXQgbGF0ZXIuDQoNCk5vdywgZ28gYmFjayB0byB5b3VyIGFubmFjb25kYSBwcm9tcHQgYW5kIG1ha2Ugc3VyZSB5b3UgYXJlIGluIHRoZQ0KWW9sb3Y1IGVudmlyb25tZW50IGNyZWF0ZWQgZWFybGllci4gTm93IHdlIGNhbiBpbnN0YWxsIENvbWV0IGJ5IHJ1bm5pbmcNCnRoZSBmb2xsb3dpbmcgY29kZSBpbiB0aGUgcHJvbXB0Og0KDQpgYGB7YmFzaH0NCiMgTWFrZSBzdXJlIHRoZSBZT0xPdjUgZW52aXJvbm1lbnQgaXMgYWN0aXZlLCBpZiBub3QgYWN0aXZhdGUgaXQ6DQpjb25kYSBhY3RpdmF0ZSBZT0xPdjUNCg0KIyBJbnN0YWxsIENvbWV0DQpwaXAgaW5zdGFsbCBjb21ldF9tbA0KDQojIEVudGVyIHlvdXIgQVBJIGtleSBhbmQgYSBwcm9qZWN0IG5hbWUNCnNldCBDT01FVF9BUElfS0VZPVk3aHZhb0FHekc3Snp2RGhZVkd2Z3NpMXMNCnNldCBDT01FVF9QUk9KRUNUX05BTUU9RmlzaERldGVjdGlvbg0KYGBgDQoNCiMjIFJ1bm5pbmcgTW9kZWwgVHJhaW5pbmcNCg0KV2UgYXJlIG5vdyByZWFkeSB0byB0cmFpbiBhIG1vZGVsLiBFbnRlciB0aGUgZm9sbG93aW5nIGNvbW1hbmRzIGluIHRvIHRoZSBhbm5hY29uZGEgcHJvbXB0LCBmaXJzdCBjaGVja2luZyB0aGF0IEdQVSByZXNvdXJjZXMgYXJlIGF2YWlsYWJsZSB0byBzcGVlZCB1cCB0cmFpbmluZzoNCg0KYGBge2Jhc2h9DQojIENoZWNrIEdQVSBpcyBhdmFpbGFibGUNCnB5dGhvbiBDOi9ZT0xPdjUvVGVzdENVREEucHkNCg0KIyBSdW4gdHJhaW5pbmcNCnB5dGhvbiB0cmFpbi5weSAtLWltZyA2NDAgLS1lcG9jaHMgMzAwIC0tZGF0YSBDOi9ZT0xPdjUvVHJhaW5pbmcvY29uZmlnLnlhbWwgLS13ZWlnaHRzIHlvbG92NXMucHQNCmBgYA0KDQojIyBMb2dnaW5nIHRyYWluaW5nIHJ1biB3aXRoIENvbWV0DQoNCk9uY2UgdHJhaW5pbmcgaXMgY29tcGxldGUgd2UgY2FuIGxvZyB0aGUgcnVuIHdpdGggY29tZXQ6DQoNCmBgYHtiYXNofQ0KY29tZXQgdXBsb2FkIEM6XFlPTE92NVx5b2xvdjVcLmNvbWV0bWwtcnVuc1wyNmJlNmJhOGZiNzY0YzJmODBkOGFmMDYyZmMxMDVhNC56aXANCmBgYA0KDQoNCg0KDQoNCg==</div>
 
 
 

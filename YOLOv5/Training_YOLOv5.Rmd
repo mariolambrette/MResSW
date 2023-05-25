@@ -27,16 +27,20 @@ Run the following in an Annaconda Prompt to create and activate the
 conda environment:
 
 ```{bash}
-conda create -n YOLOv5
-conda activate YOLOv5
+conda create -n YOLOv52
+conda activate YOLOv52
 conda install pip
 ```
 
-Next, install the YOLO requirements.txt file using the following
-command:
+Next, install the YOLO requirements.txt file and the correct version of Pytorch to allow the GPU to be used using the following commands:
 
 ```{bash}
+# Install pytorch - got to https://pytorch.org/ to get the correct command for you system
+conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+
+# Install requirements
 pip install -r yolov5/requirements.txt
+
 ```
 
 The environment is now ready for running YOLOv5 scripts. the directory
@@ -198,10 +202,14 @@ set COMET_PROJECT_NAME=FishDetection
 
 ## Running Model Training
 
-We are now ready to train a model. Enter the following command in to the command prompt:
+We are now ready to train a model. Enter the following commands in to the annaconda prompt, first checking that GPU resources are available to speed up training:
 
 ```{bash}
-python train.py --img 640 --epochs 5 --data C:/YOLOv5/Training/config.yaml --weights yolov5s.pt
+# Check GPU is available
+python C:/YOLOv5/TestCUDA.py
+
+# Run training
+python train.py --img 640 --epochs 300 --data C:/YOLOv5/Training/config.yaml --weights yolov5s.pt
 ```
 
 ## Logging training run with Comet
