@@ -1,20 +1,32 @@
-
-EMDB <- 'C:/YOLOv5/Training/EMOutputs/1000_MEOW_Points.txt'
-picdir <- 'C:/Annotations/1000Frames_MEOW/Training'
-group_name <- '1000MEOW'
-imgheight <- 1080
-imgwidth <- 1920
-YOLOdir <- 'C:/YOLOv5/Training'
-SpeciesIndex <- sptable
-remove.anno = c('spp', 'limanda')
-label.type = 'group'
-groups <- list(benthic = list('albida', 'bernhardus', 'pagarus', 'rubens', 'undatum', 'vulgaris'),
-               benthopelagic = list('gurnadus', 'intermedius', 'limanda', 'limanda-flesus', 'lyra', 'platessa', 'scorpius'),
-               pelagic = list('aeglefinus', 'canicula', 'capillata', 'merlangus', 'minutus', 'molva', 'morhua'))
+#' Convert an EventMeasure Database to YOLO annotation format
+#'
+#' This function takes an EventMeasure database export and converts it to the
+#' YOLO annotation format. Images are randomly sampled and copied in to the 
+#' relevant YOLO training/validation/testing directories with an 80/10/10 split.
+#' .
+#' @param EMDB The file path to the EventMeasure database. This may be a modified version of the EventMeasure export created with RenameSpecies()
+#' @param picdir The path to the directory containg the images reffered to in the specied EventMeasure database
+#' @param group_name The identifier to give this set of images. This must be a character string and will form the filename for the images copied in to the YOLO image directories. Image filenames will be 'NUMBER_group_name.jpg'.
+#' @param SpeciesIndex A dataframe containing each unique value in the EventMeasure database 'Species' column and an associated index value. This should be created with the EMCreateYAML() function so as to be consistent with the YAML configuration file for the YOLO model.
+#' @param imgheight The height (in pixels) of annotated images (required to transform bounding box coordinates to YOLO format).
+#' @param imgwidth The width (in pixels) of annotated images (required to transform bounding box coordinates to YOLO format).
+#' @param YOLOdir The path to the directory containing the YOLO training data. This directory needs to have a specific structure, containing two subdirectories named 'images' and 'labels'. Each of these must then have three subdirectories named 'Train', 'Val' and 'Test'.
+#' @param remove.anno An optional character vector containing the name of any species that should not be included in the YOLO annotations. The species names must appear exactly as they do in the 'Species' Column of the EventMeasure databse. This can be useful when, for example, multiple species are annotated but a detector is required for only a small number of those.
+#' @export
+#' 
+#' @examples
+#' EM2YOLO(EMDB = 'path/to/EMdatabase.txt',
+#'         picdir = 'path/to/EM/images',
+#'         group_name = 'Set1',
+#'         SpeciesIndex = sptable,
+#'         imgheight = 1080,
+#'         imgwidth = 1920,
+#'         YOLOdir = path/to/YOLO/data,
+#'         remove.anno = c('sp1', 'sp2'))
 
 
 EM2YOLO <- function(EMDB, picdir, group_name, SpeciesIndex, imgheight, imgwidth, 
-                    YOLOdir, remove.anno = NULL, label.type = 'original', groups = NULL){
+                    YOLOdir, remove.anno = NULL){
   
   # Load in the EM DB file
   EM <- read.csv(EMDB, sep = '\t')
@@ -51,12 +63,14 @@ EM2YOLO <- function(EMDB, picdir, group_name, SpeciesIndex, imgheight, imgwidth,
     return(comp$id)
   }
   
-  if(label.type == 'original'){
+  if(!is.null(remove.anno)){
     EMfilt <- EM %>%
-      filter(!(Species %in% remove.anno)) %>% 
-      rowwise() %>%
-      mutate(sp_id = index(Species))
+      filter(!(Species %in% remove.anno))
   }
+  
+  EMfilt <- EM %>%
+    rowwise() %>%
+    mutate(sp_id = index(Species))
   
   # Split the annotations for each image
   imgannots <- EMfilt %>%
