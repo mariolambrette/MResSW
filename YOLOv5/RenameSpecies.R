@@ -22,7 +22,7 @@
 #' @param rm.species A character vector containing the names of species that are to be removed from the database all together.
 #' @param new.names A list of the new names to be applied to species in the database. List elements whould be character strings.
 #' @param replace.species A list containing the names of Species that are to be replaced. This list must be the same length as new.names. List elements can be either character strings, or in the case where multiple species are to be renamed the same thing (e.g. to put them into groups for training) they may be character vectors containing the names of all species within that group. It is vital that the list order here matches that in new.names. i.e. element 1 in this list will be renamed using the string specified in element 1 of new.names.
-#' @param savepath A filepath specifying where to save the modified database. The file name must carry a .txt extension.
+#' @param save.path A filepath specifying where to save the modified database. The file name must carry a .txt extension.
 #' @return Function returns the modified database as a dataframe.
 #' @export
 #' 
@@ -41,13 +41,13 @@
 #'               rm.species = c('species1'),
 #'               new.names = list('group1', 'group2'),
 #'               replace.species = list(c('species1', 'species2'), c('species3', 'species4')),
-#'               savepath = 'path/to/modified/EM/Database.txt')
+#'               save.path = 'path/to/modified/EM/Database.txt')
 
 
 
 
 RenameSpecies <- function(EMDB, verbose = T, rm.species = NULL, new.names = NULL,
-                          replace.species = NULL, savepath = NULL){
+                          replace.species = NULL, save.path = NULL){
   
   EM <- read.csv(EMDB, sep = '\t')
   
@@ -83,7 +83,7 @@ RenameSpecies <- function(EMDB, verbose = T, rm.species = NULL, new.names = NULL
         mutate(Species = case_when(Species %in% replace ~ newname, T~Species))
     }
     
-    savepath <- readline('Enter the filepath giving the location where you would like the updated DB to be saved: ')
+    save.path <- readline('Enter the filepath giving the location where you would like the updated DB to be saved: ')
   } else{
     EM <- EM %>%
       filter(!(Species %in% rm.species))
@@ -98,7 +98,7 @@ RenameSpecies <- function(EMDB, verbose = T, rm.species = NULL, new.names = NULL
     
   }
   
-  write.table(EM, file = savepath, sep = '\t', row.names = F)
+  write.table(EM, file = save.path, sep = '\t', row.names = F)
   
   return(EM)
 }
