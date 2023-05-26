@@ -166,9 +166,9 @@ As such, we need to resize the training and testing images to suit. Use
 the YOLO_img_resize function in R to do this (can be quite a slow process):
 
 ```{r}
-YOLO_img_resize(imgdir = 'C:/YOLOv5/Training/images/Train')
-YOLO_img_resize(imgdir = 'C:/YOLOv5/Training/images/Val')
-YOLO_img_resize(imgdir = 'C:/YOLOv5/Training/images/Test')
+YOLO_img_resize(imgdir = 'C:/YOLOv5/Training/images/Train', targetsize = 1280)
+YOLO_img_resize(imgdir = 'C:/YOLOv5/Training/images/Val', targetsize = 1280)
+YOLO_img_resize(imgdir = 'C:/YOLOv5/Training/images/Test', targetsize = 1280)
 ```
 
 # Training a YOLO model
