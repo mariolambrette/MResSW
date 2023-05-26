@@ -222,5 +222,6 @@ comet upload C:\YOLOv5\yolov5\.cometml-runs\26be6ba8fb764c2f80d8af062fc105a4.zip
 
 
 
+python detect.py --weights runs/train/exp7/weights/best.pt --img 640 --conf 0.6  --source C:/YOLOv5/Training/images/Test --save-txt
 
 
