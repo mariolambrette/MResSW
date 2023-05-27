@@ -1,26 +1,26 @@
 {
-    "id": "EAA55FAF",
+    "id": "B14F1B65",
     "path": "C:/MResSW/emyolo/.Rbuildignore",
     "project_path": ".Rbuildignore",
     "type": "text",
-    "hash": "4073980753",
+    "hash": "900659201",
     "contents": "",
     "dirty": false,
-    "created": 1685179234410.0,
+    "created": 1685179508435.0,
     "source_on_save": false,
     "relative_order": 1,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "2,9",
+        "cursorPosition": "2,0",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1685179245,
+    "lastKnownWriteTime": 1685179522,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1685179245219,
+    "last_content_update": 1685179522029,
     "read_only": false,
     "read_only_alternatives": []
 }
