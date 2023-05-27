@@ -1,0 +1,227 @@
+---
+title: "Training YOLOv5 Models"
+output: html_notebook
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Cloning the YOLOv5 git repo
+
+Create a directory called YOLOv5 with one sub-directories to give the
+following structure: . └── YOLOv5/ └── Training
+
+Run the following in an Annaconda prompt to clone the YOLOv5 git repo:
+
+```{bash}
+cd ./YOLOv5
+git clone https://github.com/ultralytics/yolov5
+
+```
+
+# Set up the YOLOv5 conda environment
+
+This step is only needed once.
+
+Run the following in an Annaconda Prompt to create and activate the
+conda environment:
+
+```{bash}
+conda create -n YOLOv52
+conda activate YOLOv52
+conda install pip
+```
+
+Next, install the YOLO requirements.txt file and the correct version of Pytorch to allow the GPU to be used using the following commands:
+
+```{bash}
+# Install pytorch - got to https://pytorch.org/ to get the correct command for you system
+conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+
+# Install requirements
+pip install -r yolov5/requirements.txt
+
+```
+
+The environment is now ready for running YOLOv5 scripts. the directory
+structure should look like this:
+
+. └── YOLOv5/ ├── yolov5 └── Training
+
+# Preparing the Training Data
+
+## EventMeasure Annotations
+
+Assuming the data has been annotated in EventMeasure, the first stage is
+to export the annotations as a text file:
+
+*Program \> Generate Database Output*
+
+Repeat this for all directories containg .EMObs files, saving the
+outputs into a common directory (ideally wihtin the YOLOv5 directory
+created above):
+
+\|. \|└── YOLOv5/\
+\| ├── yolov5\
+\| └── Training/\
+\| └── EMOutputs/\
+\| └── various .txt DB outputs
+
+Annotations process used: 1. Every 1000th frame in every video was
+annotated 2. Every fish in the frame that could be positively identified
+was annotated 3. Frame containing no fish were annotated with a single
+'spp' label 4. Annotated frames were extracted as JPEGs using
+EventMeasure
+
+
+### Converting annotations to YOLO format
+
+This assumes that annotated images are spread over multiple directories,
+resulting in multiple database outputs
+
+For each of the Event Measure Database outputs we need to convert the
+annotations to a YOLO format and store the annotated images in the way
+required by the YOLO model
+
+First, set up the image directory structure. It should end up like this:
+
+. └── YOLOv5/ ├── yolov5 └── Training/ ├── EMOutputs/ │ └── various .txt
+DB outputs ├── images/ │ ├── Train │ └── Test └── labels/ ├── Train └──
+Test
+
+#### Renaming Species into groups (optional)
+
+You may want to train your model on species groups rtaher than on individual species names. To do this run the RenameSpecies function on each of your EventMeasure database outputs. If you do not know all the species present in the file you can the function as follows and it will lead you through renaming them:
+
+```{r}
+RenameSpecies(EMDB = '1000Frames_MEOW_Points.txt)
+```
+
+Alternatively, by specifying ```verbose = F``` you can run the function without any further inputs after specifying the other parameters:
+
+```{r}
+
+RenameSpecies(EMDB = 'C:/YOLOv5/Training/EMOutputs/1000_MEOW_Points.txt', verbose = F, rm.species = c('spp'), group.names = list('gadoid', 'flat', 'benthic'), replace.species = list(c('aeglefinus', 'canicula', 'capillata', 'merlangus', 'minutus', 'molva', 'morhua'),c('gurnardus', 'intermedius', 'limanda', 'limanda-flesus', 'lyra', 'platessa', 'scorpius'), c('albida', 'bernhardus', 'pagurus', 'rubens', 'undatum', 'vulgaris', 'linearis')), savepath = 'C:/YOLOv5/Training/EMOutputs/Use/1000MEOW_Updated.txt')
+```
+
+
+
+#### Creating the .yaml configuration file
+
+The YOLO model needs a configuration file to know where to look for
+images and annotations and to decode class labels. We can create that
+.yaml file with the EMCreateYAML function in R. The inputs consist of a
+variety of folder and filepaths and a character vector of any species
+labels which should be removed from the annotations (e.g. where there
+are only very few annotations or where non-target species are annotated)
+
+```{r}
+sptable <- EMCreateYAML(path.EM = 'C:/YOLOv5/Training/EMOutputs/Use',
+                        path.YOLO = 'C:/YOLOv5/Training',
+                        path.train = 'C:/YOLOv5/Training/images/Train',
+                        path.val = 'C:/YOLOv5/Training/images/Val',
+                        path.test = 'C:/YOLOv5/Training/images/Test',
+                        remove.anno = c('spp'),
+                        path.yaml = 'c:/YOLOv5/Training/config.yaml')
+```
+
+The output from this function is a showing the species index. It is
+critical to retain this table as it is required in subsequent steps. You
+may wish to save it as a csv file so that you can recover it if, for
+example, R crashes.
+
+It is currently neccesary to go into the config.yaml file and manually delete the quoattions marks surrounding the species index numbers for the model to recognise them as integers - this will be fixed.
+
+```{r}
+# Save the table
+write.csv(sptable, 'c:/YOLOv5/SpeciesIndex.csv', row.names = F)
+
+# Recover the file
+sptable <- read.csv('C:/YOLOv5/SpeciesIndex.csv')
+```
+
+#### Converting Annotations
+
+Use the EM2YOLO function in R to extract the EM database outputs and
+convert annotations to the YOLO format. The function will also split
+images into training and testing sets randomly and copy images into the
+relevant directories. See the EM2YOLO documentation for more
+information.
+
+```{r}
+EM2YOLO(EMDB = 'C:/YOLOv5/Training/EMOutputs/Use/1000MEOW_Updated.txt',
+        picdir = 'C:/Annotations/1000Frames_MEOW/Training',
+        group_name = 'MEOW',
+        SpeciesIndex = sptable,
+        imgheight = 1080,
+        imgwidth = 1920,
+        YOLOdir = 'C:/YOLOv5/Training',
+        remove.anno = c('spp'))
+```
+
+## Resizing images
+
+YOLO expects all images to be 640x640 pixels in size to work correctly.
+As such, we need to resize the training and testing images to suit. Use
+the YOLO_img_resize function in R to do this (can be quite a slow process):
+
+```{r}
+YOLO_img_resize(imgdir = 'C:/YOLOv5/Training/images/Train', targetsize = 1280)
+YOLO_img_resize(imgdir = 'C:/YOLOv5/Training/images/Val', targetsize = 1280)
+YOLO_img_resize(imgdir = 'C:/YOLOv5/Training/images/Test', targetsize = 1280)
+```
+
+# Training a YOLO model
+
+We are now ready to train a YOLOv5 model. The process of developing
+computer vision models is an iterative one, so it is recommended to use
+Comet to log training runs, save hyper parameters and visualise training
+and results.
+
+## Setting up Comet
+
+First, go to <https://www.comet.com/signup> and create a Comet account.
+Once you create your account and log in you will see your API key. Make
+a note of this - we will need it to access Comet later.
+
+Now, go back to your annaconda prompt and make sure you are in the
+Yolov5 environment created earlier. Now we can install Comet by running
+the following code in the prompt:
+
+```{bash}
+# Make sure the YOLOv5 environment is active, if not activate it:
+conda activate YOLOv5
+
+# Install Comet
+pip install comet_ml
+
+# Enter your API key and a project name
+set COMET_API_KEY=Y7hvaoAGzG7JzvDhYVGvgsi1s
+set COMET_PROJECT_NAME=FishDetection
+```
+
+## Running Model Training
+
+We are now ready to train a model. Enter the following commands in to the annaconda prompt, first checking that GPU resources are available to speed up training:
+
+```{bash}
+# Check GPU is available
+python C:/YOLOv5/TestCUDA.py
+
+# Run training
+python train.py --img 640 --epochs 300 --data C:/YOLOv5/Training/config.yaml --weights yolov5s.pt
+```
+
+## Logging training run with Comet
+
+Once training is complete we can log the run with comet:
+
+```{bash}
+comet upload C:\YOLOv5\yolov5\.cometml-runs\26be6ba8fb764c2f80d8af062fc105a4.zip
+```
+
+
+
+python detect.py --weights runs/train/exp7/weights/best.pt --img 640 --conf 0.6  --source C:/YOLOv5/Training/images/Test --save-txt
+
+python val.py --weights runs/train/exp12/weights/best.pt --data C:/YOLOv5/Training/config.yaml --task test --save-txt
