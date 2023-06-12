@@ -48,6 +48,16 @@ structure should look like this:
 
 . └── YOLOv5/ ├── yolov5 └── Training
 
+# Install emyolo package
+
+```{r}
+library(devtools)
+install_github("mariolambrette/MResSW/emyolo")
+
+library(emyolo)
+```
+
+
 # Preparing the Training Data
 
 ## EventMeasure Annotations
