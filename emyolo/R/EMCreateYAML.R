@@ -58,3 +58,6 @@ EMCreateYAML <- function(EM.dir, YOLO.dir, train.dir, val.dir, test.dir, remove.
   
   return(sptable)
 }
+
+Numeric keys and more efficient:
+https://chat.openai.com/share/f558238a-710b-4806-9f22-c586da63e25c
