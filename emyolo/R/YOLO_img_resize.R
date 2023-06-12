@@ -33,6 +33,9 @@ YOLO_img_resize <- function(img.dir, target.size = 640){
   return(NULL)
 }
 
+Resize images with ppython:
+https://chat.openai.com/share/d15e1a41-0965-4ef3-afc5-c56427a31259
+
 
 
 
