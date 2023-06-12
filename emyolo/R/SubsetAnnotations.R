@@ -26,28 +26,26 @@
 #'                   target.label.dir = 'Training/Subset/labels/Train')
 
 SubsetAnnotations <- function(img.dir, label.dir, sample.size, target.img.dir, target.label.dir){
-  img.files <- list.files(img.dir, full.names = T)
+  library(fs)
   
+  img.files <- list.files(img.dir, full.names = TRUE)
   
   # Select random sample of desired size
   selected <- sample(img.files, size = sample.size)
   
   # Get the base filenames with no extension
-  base.names <- basename(selected)
-  base.names <- tools::file_path_sans_ext(base.names)
+  base.names <- tools::file_path_sans_ext(basename(selected))
   
   # Get the vector of target annotation filepaths
-  label.files <- paste0(label.dir, '/', base.names, '.txt')
+  label.files <- file.path(label.dir, paste0(base.names, '.txt'))
   
   # create the character vectors showing destination for images and labels
-  img.dest <- paste0(target.img.dir, '/', base.names, '.jpg')
-  label.dest <- paste0(target.label.dir, '/', base.names, '.txt')
+  img.dest <- file.path(target.img.dir, paste0(base.names, '.jpg'))
+  label.dest <- file.path(target.label.dir, paste0(base.names, '.txt'))
   
   # Copy the files across
-  file.copy(selected, img.dest)
-  file.copy(label.files, label.dest)
-  
-  
+  invisible(file.copy2(selected, img.dest))
+  invisible(file.copy2(label.files, label.dest))
 }
 
 
